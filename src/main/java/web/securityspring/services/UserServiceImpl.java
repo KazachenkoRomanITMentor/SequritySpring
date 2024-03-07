@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void deleteUserById(long id) {
         Optional<User> deletedUser = userRepository.findById(id);
         if(!deletedUser.isPresent()) {
@@ -60,6 +62,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public Set<Role> getUserRole(Set<String> rolesId) {
         Set<Role> roles = new HashSet<>();
         for (String id: rolesId){

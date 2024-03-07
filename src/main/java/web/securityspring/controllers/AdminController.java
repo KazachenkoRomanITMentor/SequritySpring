@@ -57,7 +57,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/edit/save/{id}")
+    @PostMapping("/edit/{id}")
     public String updateUser(@PathVariable("id") long id, User user,
                              BindingResult bindingResult){
         if (bindingResult.hasErrors()){
