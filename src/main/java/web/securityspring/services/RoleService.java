@@ -6,7 +6,5 @@ import java.util.Set;
 
 public interface RoleService {
 
-    Role addNewRole(Role role);
-    void deleteRole(Role role);
     Set<Role> getAllRoles();
 }

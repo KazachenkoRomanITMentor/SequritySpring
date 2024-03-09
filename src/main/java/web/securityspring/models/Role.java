@@ -1,8 +1,6 @@
 package web.securityspring.models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
@@ -23,9 +21,9 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Role(String rolename, Set<User> users) {
+    public Role(String rolename) {
         this.rolename = rolename;
-        this.users = users;
+        //this.users = users;
     }
 
     public Long getId() {
@@ -39,7 +37,6 @@ public class Role implements GrantedAuthority {
     public Set<User> getUsers() {
         return users;
     }
-
     public void setId(Long id) {
         this.id = id;
     }

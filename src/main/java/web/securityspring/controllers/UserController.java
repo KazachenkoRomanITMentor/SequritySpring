@@ -20,13 +20,12 @@ public class UserController {
         this.userService = userService;
     }
 
-@GetMapping("")
-public String showUserInfo(Model model){
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    User user = (User)authentication.getPrincipal();
-    model.addAttribute("user", user);
-    return "userinfo";
-
-}
+    @GetMapping("/")
+    public String showUserInfo(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user);
+        return "userinfo";
+    }
 
 }
