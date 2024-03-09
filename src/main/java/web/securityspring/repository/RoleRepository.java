@@ -6,4 +6,5 @@ import web.securityspring.models.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role getRoleById(long id);
 }

@@ -26,11 +26,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> returnedUser = userRepository.findByUsername(username);
-        if (returnedUser.isPresent()){
-            return User.fromUser(returnedUser.get()) ;
-        }else {
-            throw new IllegalArgumentException("User with usernane: " + username + " is not issue");
+        if (returnedUser.isEmpty()){
+            throw new IllegalArgumentException("User with username: " + username + " is not issue") ;
         }
+        User user = returnedUser.get();
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(), user.getRoles());
     }
 
 

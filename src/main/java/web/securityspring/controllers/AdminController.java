@@ -2,6 +2,8 @@ package web.securityspring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +30,6 @@ public class AdminController {
     }
 
     @GetMapping("")
-    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String GetUserListByAdmin(Model model){
         model.addAttribute("users", userService.getAllUser());
         return "adminPage";
@@ -57,7 +58,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") long id, User user,
                              BindingResult bindingResult){
         if (bindingResult.hasErrors()){
