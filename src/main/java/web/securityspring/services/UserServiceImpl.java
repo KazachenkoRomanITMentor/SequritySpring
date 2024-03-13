@@ -9,26 +9,26 @@ import web.securityspring.models.User;
 import web.securityspring.repository.RoleRepository;
 import web.securityspring.repository.UserRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, RoleRepository roleRepository1) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository1;
     }
 
     @Override
     @Transactional
     public User addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(new HashSet<>(Arrays.asList(roleRepository.getRoleById(1))));
         return userRepository.saveAndFlush(user);
     }
 
@@ -54,6 +54,21 @@ public class UserServiceImpl implements UserService{
             throw new IllegalArgumentException("id: " + id + " not issue");
         }
         userRepository.delete(deletedUser.get());
+    }
+
+    @Override
+    public User findUserByName(String name) {
+        return userRepository.findByUsername(name).get();
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(User user) {
+        Optional<User> updatebleUser = userRepository.findById(user.getId());
+        if (updatebleUser.isEmpty()) {
+            throw new IllegalArgumentException("This user is not issue");
+        }
+      return   userRepository.saveAndFlush(user);
     }
 
 }

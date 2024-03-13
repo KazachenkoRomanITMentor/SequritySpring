@@ -11,4 +11,8 @@ public interface UserService {
     List<User> getAllUser();
     void deleteUserById(long id);
 
+    User findUserByName(String name);
+
+    User updateUser(User user);
+
 }

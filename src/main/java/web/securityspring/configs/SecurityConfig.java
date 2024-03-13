@@ -37,8 +37,8 @@ private final SuccessUserHandler successUserHandler;
                         .requestMatchers(
                                 "/register/**",
                                 "/index").permitAll()
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**", "/api/v1/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/**", "/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(form -> form
