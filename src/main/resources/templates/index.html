@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security Task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Spring Security Task</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br /><br />
+<div class="container">
+    <div class="row">
+        <h1 class="text-center"> Spring Security Task </h1>
+        <h3 class="text-right"> Задание: </h3>
+
+        <p>  Перенесите классы и зависимости из предыдущей задачи.
+        <p>  Создайте класс Role и свяжите User с ролями так, чтобы юзер мог иметь несколько ролей.
+        <p>  Имплементируйте модели {{Role}} и {{User}} интерфейсами {{GrantedAuthority}} и {{UserDetails}} соответственно. Измените настройку секьюрности с {{inMemory}} на {{userDetailService}}
+        <p>  Все CRUD-операции должны быть доступны только пользователю с ролью admin по url: /admin/. Добавление/изменение юзера должно быть с ролями за один запрос
+        <p>  Пользователь с ролью user имеет доступ только по своему url /user и получать данные только о себе. Доступ к этому url должен быть только у пользователей с ролью user и admin. Не забывайте про несколько ролей у пользователя!
+        <p>  Настройте logout с любого url
+        <p>   Необходимо установить Postman/Insomnia (на выбор) и разобраться как он работает
+        <p>  С помощью Postman/Insomnia протестировать все endpoints.
+    </div>
+</div>
+</body>
+</html>
