@@ -1,6 +1,7 @@
 package web.securityspring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,12 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import web.securityspring.models.Role;
 import web.securityspring.models.User;
 import web.securityspring.services.RoleService;
 import web.securityspring.services.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -50,12 +53,14 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showUserUpdateForm(@PathVariable("id") long id, Model model){
-        User readableUser =userService.findUserById(id);
+    public String showUserUpdateForm(@PathVariable("id") long id, Model model) {
+        Optional<User> user = userService.findUserById(id);
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", readableUser);
+        model.addAttribute("user", user);
         return"aditUser";
-
     }
 
     @PostMapping("/update/{id}")
