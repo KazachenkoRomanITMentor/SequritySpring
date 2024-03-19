@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.*;
 
 
 @SpringBootTest(classes = TestConfig.class)
-@Transactional
 @AutoConfigureMockMvc
 @WithMockUser(username = "Admin", roles = "ADMIN")
 @Sql({"/sql/users.sql"})
