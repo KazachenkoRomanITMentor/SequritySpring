@@ -2,12 +2,12 @@ package web.securityspring.services;
 
 import web.securityspring.models.User;
 import java.util.List;
-
+import java.util.Optional;
 
 
 public interface UserService {
     User addUser(User user);
-    User findUserById(long id);
+    Optional<User> findUserById(long id);
     List<User> getAllUser();
     void deleteUserById(long id);
 

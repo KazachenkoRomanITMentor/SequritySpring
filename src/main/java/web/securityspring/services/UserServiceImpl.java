@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
-import web.securityspring.models.Role;
 import web.securityspring.models.User;
 import web.securityspring.repository.RoleRepository;
 import web.securityspring.repository.UserRepository;
+import java.util.*;
 
 import java.util.*;
 
@@ -18,27 +18,23 @@ public class UserServiceImpl implements UserService{
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, RoleRepository roleRepository1) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository1;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     @Transactional
     public User addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(Arrays.asList(roleRepository.getRoleById(1))));
+        user.setRoles(new HashSet<>(Arrays.asList(roleRepository.getRoleById(2))));
         return userRepository.saveAndFlush(user);
     }
 
     @Override
-    public User findUserById(long id) {
-        Optional<User> returnedUser = userRepository.findById(id);
-        if (returnedUser.isEmpty()){
-            throw new IllegalArgumentException("id: " + id + " not issue");
-        }
-        return returnedUser.get();
+    public Optional<User> findUserById(long id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -49,23 +45,19 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void deleteUserById(long id) {
-        Optional<User> deletedUser = userRepository.findById(id);
-        if(deletedUser.isEmpty()) {
-            throw new IllegalArgumentException("id: " + id + " not issue");
-        }
-        userRepository.delete(deletedUser.get());
+        userRepository.deleteById(id);
     }
 
     @Override
     public User findUserByName(String name) {
-        return userRepository.findByUsername(name).get();
+        return userRepository.findByUsername(name).orElseGet(User::new);
     }
 
     @Override
     @Transactional
     public User updateUser(User user) {
-        Optional<User> updatebleUser = userRepository.findById(user.getId());
-        if (updatebleUser.isEmpty()) {
+        Optional<User> updatableUser = userRepository.findById(user.getId());
+        if (updatableUser.isEmpty()) {
             throw new IllegalArgumentException("This user is not issue");
         }
       return   userRepository.saveAndFlush(user);
